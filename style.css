@@ -16,10 +16,10 @@ body {
 
 .flashcards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Mudando para 4 cards por linha */
     gap: 20px;
     padding: 20px;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .card {
@@ -28,41 +28,52 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 200px;
-    height: 150px;
+    height: 200px;
     position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-in-out;
 }
 
 .card:hover {
-    transform: translateY(-10px);
+    transform: rotateY(180deg); /* Efeito de flip */
+}
+
+.card .question,
+.card .answer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Impede que o conteúdo do verso apareça ao virar o card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .question {
     font-size: 18px;
     font-weight: bold;
-    padding: 20px;
     background-color: #bdffde;
-    height: 100%;
+    color: #333;
+    z-index: 2; /* Fica na frente inicialmente */
 }
 
 .answer {
     font-size: 16px;
     color: #070707;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-color: #87f0bb;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transform: rotateY(180deg); /* A resposta começa virada para o verso */
+    z-index: 1; /* Fica atrás inicialmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card:hover .answer {
     opacity: 1;
     visibility: visible;
+    z-index: 2;
 }
 
